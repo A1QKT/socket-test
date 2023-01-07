@@ -18,6 +18,7 @@ const maximum = process.env.MAXIMUM || 4;
 io.on('connection', socket => {
     console.log('con cac')
     socket.on('join_room', data => {
+        console.log('join ne')
         if (users[data.room]) {
             const length = users[data.room].length;
             if (length === maximum) {
@@ -41,21 +42,29 @@ io.on('connection', socket => {
     });
 
     socket.on('offer', data => {
+        console.log('offer')
+
         //console.log(data.sdp);
         socket.to(data.offerReceiveID).emit('getOffer', {sdp: data.sdp, offerSendID: data.offerSendID, offerSendEmail: data.offerSendEmail});
     });
 
     socket.on('answer', data => {
+        console.log('answer')
+
         //console.log(data.sdp);
         socket.to(data.answerReceiveID).emit('getAnswer', {sdp: data.sdp, answerSendID: data.answerSendID});
     });
 
     socket.on('candidate', data => {
+        console.log('candidate')
+
         //console.log(data.candidate);
         socket.to(data.candidateReceiveID).emit('getCandidate', {candidate: data.candidate, candidateSendID: data.candidateSendID});
     })
 
     socket.on('disconnect', () => {
+        console.log('disconect')
+
         console.log(`[${socketToRoom[socket.id]}]: ${socket.id} exit`);
         const roomID = socketToRoom[socket.id];
         let room = users[roomID];
