@@ -17,6 +17,9 @@ const maximum = process.env.MAXIMUM || 4;
 
 io.on('connection', socket => {
     console.log('con cac', socket.id)
+    socket.on('helo', data => {
+        console.log('helle em')
+    })
     socket.on('join_room', data => {
         console.log('join ne')
         if (users[data.room]) {
