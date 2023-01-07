@@ -16,6 +16,7 @@ let socketToRoom = {};
 const maximum = process.env.MAXIMUM || 4;
 
 io.on('connection', socket => {
+    console.log('con cac')
     socket.on('join_room', data => {
         if (users[data.room]) {
             const length = users[data.room].length;
